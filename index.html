@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" author="Neyida Michel">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neyida's 431 First Assignment Page 1</title>
+</head>
+<body>
+    <h1>Login Page</h1>
+    <form method="get" id="loginForm" action="formProcessor.html" onsubmit="return validateForm()" >
+        <div>
+            <h3>Please Fill Out The Required Fields To Make Your Account</h3>
+            
+            <!-- Fields for the user to fill out -->
+            <p>Account Name: <input type="text" id="Account-Name" name="Account-Name" required></p>
+            <p>Display Name: <input type="text" name="Display-Name"></p>
+            <p>Email Address: <input type="email" name="Email-Address" required></p>
+            <p>Phone Number: <input type="tel" name="Phone-Number" pattern="\d{10}" required></p>
+            <p>Date of Birth: <input type="date" id="Date-of-Birth" name="Date-of-Birth" required></p>
+            <p>Zipcode: <input type="number" name="Zipcode" id="Zipcode" required> </p> 
+            <p>Password: <input type="password" id="Password" name="Password" required></p>
+            <p>Password Confirmation: <input type="password" id="Password-Confirmation" name="Password-Confirmation" required></p>
+
+            <!-- Hidden timestamp field -->
+            <input type="hidden" id="timestamp" name="timestamp">
+        </div>
+        <script>
+            // Validate the age of the user
+            function validateAge(){
+                var dob = document.getElementById("Date-of-Birth").value;
+                var today = new Date();
+                var birthDate = new Date(dob);
+                var age = today.getFullYear() - birthDate.getFullYear();
+                var mo = today.getMonth() - birthDate.getMonth();
+                if (mo < 0 || (mo === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                if (age < 18){
+                    alert("You must be 18 years or older to create an account.");
+                    return false;
+                }
+                return true;
+            }
+           
+            // Validate the passwords match
+            function validatePassword(){
+                var password = document.getElementById("Password").value;
+                var passwordConfirmation = document.getElementById("Password-Confirmation").value;
+                if (password !== passwordConfirmation){
+                    alert("Passwords do not match.");
+                    return false;
+                }
+                return true;
+            }
+            // Validate the zipcode is 5 digits
+            function validateZipcode(){
+                var zipcode = document.getElementById("Zipcode").value;
+                if (zipcode.length !== 5){
+                    alert("Zipcode must be 5 digits.");
+                    return false;
+                }
+                return true;
+            }
+            // Validate the username
+            function validateUsername(){
+                var username = document.getElementById("Account-Name").value; 
+                //user can not start with a number 
+                if (username[0]==0 || username[0]==1 || username[0]==2 || username[0]==3 || username[0]==4 || username[0]==5 || username[0]==6 || username[0]==7 || username[0]==8 || username[0]==9){
+                    alert("Username can not start with a number.");
+                    return false;
+                }
+                //user can only contain letters and numbers
+                if (!/^[a-zA-Z0-9]+$/.test(username)){
+                    alert("Username can only contain letters and numbers.");
+                    return false;
+                }
+                return true;
+            }
+            
+            //Make timer to count how long it takes to fill out the form
+            var pageLoadTime   // Capture the time when the page is loaded
+            window.onload = function() {
+                var pageLoadTime = Date.now();
+                document.getElementById("timestamp").value = pageLoadTime;  
+                console.log("Page loaded at: " + pageLoadTime);
+    
+            }
+            
+            function validateForm() {
+                var formSubmitTime = Date.now();  // Capture the time when the form is submitted
+                var timeElapsed = formSubmitTime - pageLoadTime;  
+                //console.log("Form submitted at: " + formSubmitTime);
+                //console.log("Time taken (in milliseconds): " + timeElapsed);
+                return validateAge() && validatePassword() && validateZipcode() && validateUsername();
+            }
+        </script>
+        <div>
+            <input type="submit" value="Submit">
+            <input type="reset" value="Reset">
+    
+        </div>
+    </form> 
+</body>
