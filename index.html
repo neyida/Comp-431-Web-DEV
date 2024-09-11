@@ -77,19 +77,12 @@
                 return true;
             }
             
-            //Make timer to count how long it takes to fill out the form
-            var pageLoadTime   // Capture the time when the page is loaded
-            window.onload = function() {
-                var pageLoadTime = Date.now();
-                document.getElementById("timestamp").value = pageLoadTime;  
-                console.log("Page loaded at: " + pageLoadTime);
-    
-            }
+   
             
             function validateForm() {
                 var formSubmitTime = Date.now();  // Capture the time when the form is submitted
-                var timeElapsed = formSubmitTime - pageLoadTime;  
-                //console.log("Form submitted at: " + formSubmitTime);
+                document.getElementById("timestamp").value = formSubmitTime;  // Set the hidden timestamp field to the form submit time
+                console.log("Form submitted at: " + formSubmitTime);
                 //console.log("Time taken (in milliseconds): " + timeElapsed);
                 return validateAge() && validatePassword() && validateZipcode() && validateUsername();
             }

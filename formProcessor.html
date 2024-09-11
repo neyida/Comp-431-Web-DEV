@@ -6,6 +6,91 @@
     <title>Neyida's 431 First Assignment Page 2 </title>
 </head>
 <body>
+    <h2>Account Information</h2>
+    <table border="3">
+        <tread>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+        </tread>
+        <tbody>
+            <tr>
+                <td>Account Name</td>
+                <td id="account-name"></td> 
+            </tr>
+            <tr>
+                <td>Display Name</td>
+                <td id="display-name"></td>
+            </tr>
+            <tr>
+                <td>Email Address</td>
+                <td id="email-address"></td>
+            </tr>
+            <tr>
+                <td>Phone Number</td>
+                <td id="phone-number"></td>
+            </tr>
+            <tr>
+                <td>Date of Birth</td>
+                <td id="date-of-birth"></td>
+            </tr>
+            <tr>
+                <td>Zipcode</td>
+                <td id="zipcode"></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td id="password"></td>
+            </tr>
+            <tr>
+                <td>Time Stamp</td>
+                <td id="timestamp"></td>
+            </tr>
+            
+        </tbody>
 
-    
+    </table>
+    <script>
+        // Function to get URL parameters
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                accountName: params.get('Account-Name'),
+                displayName: params.get('Display-Name'),
+                emailAddress: params.get('Email-Address'),
+                phoneNumber: params.get('Phone-Number'),
+                dob: params.get('Date-of-Birth'),
+                zipcode: params.get('Zipcode'),
+                password: params.get('Password'),
+                timestamp: params.get('timestamp')
+            };
+        }
+        function hidePassword(password) {
+            const passwordLength = password.length;
+            const hiddenPassword = '*'.repeat(passwordLength);
+            return hiddenPassword;
+        }
+
+        // Populate the table with form data
+        function populateTable() {
+            const data = getQueryParams();
+            document.getElementById('account-name').textContent = data.accountName;
+            document.getElementById('display-name').textContent = data.displayName || 'N/A';
+            document.getElementById('email-address').textContent = data.emailAddress;
+            document.getElementById('phone-number').textContent = data.phoneNumber;
+            document.getElementById('date-of-birth').textContent = data.dob;
+            document.getElementById('zipcode').textContent = data.zipcode;
+
+            const hiddenPassword = hidePassword(data.password);  
+            document.getElementById('password').textContent = hiddenPassword;
+
+            document.getElementById('timestamp').textContent = new Date(parseInt(data.timestamp)).toLocaleString();  // Convert timestamp to readable format
+        }
+
+        // Call the function to populate the table when the page loads
+        window.onload = populateTable;
+    </script>
+
+
 </body>
